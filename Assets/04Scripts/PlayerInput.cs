@@ -23,7 +23,9 @@ public class PlayerInput : MonoBehaviour {
     public float Dmag;
     public Vector3 Dvec;
 
-    public bool run;
+    public bool run; //跑步
+    public bool jump; 
+    public bool lastJump;
 
     [Header("===== Others =====")]
     public bool inputEnable = true;
@@ -53,7 +55,41 @@ public class PlayerInput : MonoBehaviour {
 
         Dup = Mathf.SmoothDamp(Dup, tragetDup, ref velocityDup, 0.1f);
         Dright = Mathf.SmoothDamp(Dright, tragetDright, ref velocityDright, 0.1f);
-        Dmag = Mathf.Sqrt((Dup * Dup) + (Dright * Dright));
-        Dvec = Dright * transform.right + Dup * transform.forward;
+
+        Vector2 tempDAxis = SquareToCircle(new Vector2(Dright, Dup));
+        float Dright2 = tempDAxis.x;
+        float Dup2 = tempDAxis.y;
+
+        Dmag = Mathf.Sqrt((Dup2 * Dup2) + (Dright2 * Dright2));
+        Dvec = Dright2 * transform.right + Dup2 * transform.forward;
+
+        run = Input.GetKey(keyA);
+
+        bool newJump = Input.GetKey(keyB);
+        //jump = newJump;
+        if (newJump != lastJump && newJump == true)
+        {
+            jump = true;
+        }
+        else
+        {
+            jump = false;
+        }
+        lastJump = newJump;
+
     }
+
+    //坐标转换
+    private Vector2 SquareToCircle(Vector2 input)
+    {
+        Vector2 output = Vector2.zero;
+        output.x = input.x * Mathf.Sqrt(1 - (input.y * input.y) / 2.0f);
+        output.y = input.y * Mathf.Sqrt(1 - (input.x * input.x) / 2.0f);
+
+        return output;
+    }
+
+
+
+
 }

@@ -435,9 +435,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 1564638916}
   pi: {fileID: 0}
-  walkSpeed: 2
-  runMultiplier: 2
-  jumpVelocity: 6
+  walkSpeed: 1.4
+  runMultiplier: 2.7
+  jumpVelocity: 4
+  rollVelocity: 2
+  heightToRoll: 5
   anim: {fileID: 0}
   islockPlanar: 0
 --- !u!136 &1111308678

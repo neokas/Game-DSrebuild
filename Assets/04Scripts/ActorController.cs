@@ -6,10 +6,11 @@ public class ActorController : MonoBehaviour {
 
     public GameObject model;
     public PlayerInput pi;
-    public float walkSpeed = 1.4f;
+    public float walkSpeed = 2.4f;
     public float runMultiplier = 2.0f;
     public float jumpVelocity = 3.0f;
-
+    public float rollVelocity = 1.0f;
+    public float heightToRoll = 10.0f;
 
     [SerializeField]
     private Animator anim;
@@ -17,7 +18,9 @@ public class ActorController : MonoBehaviour {
     private Vector3 planarVec;
     private Vector3 thrustVec;
 
+
     public bool islockPlanar = false;
+
 
     private void Awake()
     {
@@ -52,6 +55,12 @@ public class ActorController : MonoBehaviour {
         //rigid.position += planarVec * Time.fixedDeltaTime;
         rigid.velocity = new Vector3(planarVec.x, rigid.velocity.y, planarVec.z)+thrustVec;
         thrustVec = Vector3.zero;
+
+
+        if(rigid.velocity.magnitude >heightToRoll)
+        {
+            anim.SetTrigger("roll");
+        }
     }
 
     /// <summary>
@@ -87,4 +96,17 @@ public class ActorController : MonoBehaviour {
         islockPlanar = false;
     }
 
+    public void  OnFallEnter()
+    {
+        pi.inputEnable = false;
+        islockPlanar = true;
+    }
+
+
+    public void OnRollEnter()
+    {
+        pi.inputEnable = false;
+        islockPlanar = true;
+        thrustVec = new Vector3(0, rollVelocity, 0);
+    }
 }

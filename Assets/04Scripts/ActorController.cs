@@ -10,6 +10,7 @@ public class ActorController : MonoBehaviour {
     public float runMultiplier = 2.0f;
     public float jumpVelocity = 3.0f;
     public float rollVelocity = 1.0f;
+    public float jabVelocity = 3.0f;
     public float heightToRoll = 10.0f;
 
     [SerializeField]
@@ -102,11 +103,23 @@ public class ActorController : MonoBehaviour {
         islockPlanar = true;
     }
 
-
     public void OnRollEnter()
     {
         pi.inputEnable = false;
         islockPlanar = true;
         thrustVec = new Vector3(0, rollVelocity, 0);
     }
+
+    public void OnJabEnter()
+    {
+        pi.inputEnable = false;
+        islockPlanar = true;
+    }
+
+    public void OnJabUpdate()
+    {
+        thrustVec = model.transform.forward * anim.GetFloat("jabVelocity");
+    }
+
+
 }

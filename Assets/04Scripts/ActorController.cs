@@ -30,10 +30,12 @@ public class ActorController : MonoBehaviour {
         rigid = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+
         float targetRunMulti = (pi.run) ? 2.0f : 1.0f;
         anim.SetFloat("forward", pi.Dmag * Mathf.Lerp(anim.GetFloat("forward"), targetRunMulti, 0.5f));
+
         if (pi.jump == true)
         {
             anim.SetTrigger("jump");
@@ -49,14 +51,10 @@ public class ActorController : MonoBehaviour {
         {
             planarVec = pi.Dmag * model.transform.forward * walkSpeed * ((pi.run) ? runMultiplier : 1.0f);
         }
-    }
-
-    private void FixedUpdate()
-    {
+ 
         //rigid.position += planarVec * Time.fixedDeltaTime;
         rigid.velocity = new Vector3(planarVec.x, rigid.velocity.y, planarVec.z)+thrustVec;
         thrustVec = Vector3.zero;
-
 
         if(rigid.velocity.magnitude >heightToRoll)
         {

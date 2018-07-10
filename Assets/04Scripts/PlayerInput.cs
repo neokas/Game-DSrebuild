@@ -6,15 +6,23 @@ public class PlayerInput : MonoBehaviour {
 
     //在Inspector中绑定按键
     [Header("===== Key settings =====")]
-    public string keyUp;
-    public string keyDown;
-    public string keyLeft;
-    public string keyRight;
+    //方向控制 ， 左摇杆
+    public string left_keyUp;
+    public string left_keyDown;
+    public string left_keyLeft;
+    public string left_keyRight;
 
+    //功能键
     public string keyA;
     public string keyB;
     public string keyC;
     public string keyD;
+
+    //摄像机控制 ，右摇杆
+    public string right_keyUp; //奔跑
+    public string right_keyDown; //跳跃
+    public string right_keyLeft;
+    public string right_keyRight;
 
     //在Inspector观察值的变化
     [Header("===== Output signals =====")]
@@ -22,6 +30,9 @@ public class PlayerInput : MonoBehaviour {
     public float Dright;
     public float Dmag;
     public Vector3 Dvec;
+    //摄影机控制 
+    public float Camera_up;
+    public float Camera_right;
 
     public bool run; //跑步
     public bool jump; 
@@ -43,8 +54,14 @@ public class PlayerInput : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        tragetDup = (Input.GetKey(keyUp) ? 1.0f : 0) - (Input.GetKey(keyDown) ? 1.0f : 0);
-        tragetDright = (Input.GetKey(keyRight) ? 1.0f : 0) - (Input.GetKey(keyLeft) ? 1.0f : 0);
+        //摄影机控制
+        Camera_up = (Input.GetKey(right_keyUp) ? 1.0f : 0) - (Input.GetKey(right_keyDown) ? 1.0f : 0);
+        Camera_right = (Input.GetKey(right_keyRight) ? 1.0f : 0) - (Input.GetKey(right_keyLeft) ? 1.0f : 0);
+
+
+        //奔跑及方向控制
+        tragetDup = (Input.GetKey(left_keyUp) ? 1.0f : 0) - (Input.GetKey(left_keyDown) ? 1.0f : 0);
+        tragetDright = (Input.GetKey(left_keyRight) ? 1.0f : 0) - (Input.GetKey(left_keyLeft) ? 1.0f : 0);
 
         if(inputEnable==false)
         {
@@ -52,7 +69,6 @@ public class PlayerInput : MonoBehaviour {
             tragetDright = 0;
         }
         
-
         Dup = Mathf.SmoothDamp(Dup, tragetDup, ref velocityDup, 0.1f);
         Dright = Mathf.SmoothDamp(Dright, tragetDright, ref velocityDright, 0.1f);
 
@@ -65,6 +81,7 @@ public class PlayerInput : MonoBehaviour {
 
         run = Input.GetKey(keyA);
 
+        //跳跃控制
         bool newJump = Input.GetKey(keyB);
         //jump = newJump;
         if (newJump != lastJump && newJump == true)
@@ -79,7 +96,7 @@ public class PlayerInput : MonoBehaviour {
 
     }
 
-    //坐标转换
+    //坐标转换 矩形→圆形
     private Vector2 SquareToCircle(Vector2 input)
     {
         Vector2 output = Vector2.zero;

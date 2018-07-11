@@ -41,6 +41,11 @@ public class ActorController : MonoBehaviour {
             anim.SetTrigger("jump");
         }
 
+        if(pi.attack == true)
+        {
+            anim.SetTrigger("attack");
+        }
+
         if (pi.Dmag > 0.1f)
         {
             //model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.5f);
@@ -119,5 +124,21 @@ public class ActorController : MonoBehaviour {
         thrustVec = model.transform.forward * anim.GetFloat("jabVelocity");
     }
 
+    public void OnAttack1hAEnter()
+    {
+        pi.inputEnable = false;
+        anim.SetLayerWeight(anim.GetLayerIndex("attack"), 1.0f);
+    }
+
+    public void OnAttack1hAUpdate()
+    {
+        thrustVec = model.transform.forward * anim.GetFloat("attack1hAVelocity");
+    }
+
+    public void OnAttackIdleEnter()
+    {
+        pi.inputEnable = true;
+        anim.SetLayerWeight(anim.GetLayerIndex("attack"), 0);
+    }
 
 }

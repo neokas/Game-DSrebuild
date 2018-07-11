@@ -548,7 +548,7 @@ MonoBehaviour:
   left_keyRight: d
   keyA: left shift
   keyB: j
-  keyC: 
+  keyC: k
   keyD: 
   right_keyUp: up
   right_keyDown: down
@@ -563,6 +563,8 @@ MonoBehaviour:
   run: 0
   jump: 0
   lastJump: 0
+  attack: 0
+  lastAttack: 0
   inputEnable: 1
 --- !u!1 &1564638916 stripped
 GameObject:

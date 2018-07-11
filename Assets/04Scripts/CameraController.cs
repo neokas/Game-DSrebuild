@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate() {
 
-        Vector3 tempModelEuler = model.transform.eulerAngles; //记录模型旋转角
+        Vector3 tempModelEuler = model.transform.eulerAngles; //记录模型旋转角,用于恢复
 
         //水平旋转
         playerHandle.transform.Rotate(Vector3.up, pi.Camera_right * Time.fixedDeltaTime * horizontalSpeed);
@@ -41,7 +41,7 @@ public class CameraController : MonoBehaviour {
 
         model.transform.eulerAngles = tempModelEuler; //恢复模型旋转角
 
-        //相机跟随 抖动太强，不做lerp和smoothDamp
+        //相机跟随 抖动太强，将Update方法修改为FixedUpdate
         //camera.transform.position = Vector3.Lerp(camera.transform.position,transform.position,0.2f);
         camera.transform.position = Vector3.SmoothDamp(camera.transform.position, transform.position, ref cameraDampVelocity, cameraDampValue);
         camera.transform.eulerAngles = transform.eulerAngles;

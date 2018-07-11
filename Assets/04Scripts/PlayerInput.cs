@@ -24,8 +24,9 @@ public class PlayerInput : MonoBehaviour {
     public string right_keyLeft;
     public string right_keyRight;
 
-    //在Inspector观察值的变化
+    //信号，在Inspector观察值的变化
     [Header("===== Output signals =====")]
+    //方向，运动
     public float Dup;
     public float Dright;
     public float Dmag;
@@ -34,9 +35,14 @@ public class PlayerInput : MonoBehaviour {
     public float Camera_up;
     public float Camera_right;
 
-    public bool run; //跑步
+    //跑步
+    public bool run; 
+    //跳跃
     public bool jump; 
     public bool lastJump;
+    //攻击
+    public bool attack;
+    public bool lastAttack;
 
     [Header("===== Others =====")]
     public bool inputEnable = true;
@@ -93,6 +99,19 @@ public class PlayerInput : MonoBehaviour {
             jump = false;
         }
         lastJump = newJump;
+
+        //攻击控制
+        bool newAttack = Input.GetKey(keyC);
+        //jump = newJump;
+        if (newAttack != lastAttack && newAttack == true)
+        {
+            attack = true;
+        }
+        else
+        {
+            attack = false;
+        }
+        lastAttack = newAttack;
 
     }
 

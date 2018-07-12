@@ -485,8 +485,8 @@ MonoBehaviour:
   rollVelocity: 2
   jabVelocity: 10
   heightToRoll: 5
-  anim: {fileID: 0}
-  islockPlanar: 0
+  frictionOne: {fileID: 13400000, guid: 951c40b12a2392b4dbb5295c64c84bbe, type: 2}
+  frictionZero: {fileID: 13400000, guid: 97af687ba7abe8344aefc8e8517ede51, type: 2}
 --- !u!136 &1111308678
 CapsuleCollider:
   m_ObjectHideFlags: 0

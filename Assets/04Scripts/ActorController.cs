@@ -13,7 +13,11 @@ public class ActorController : MonoBehaviour {
     public float jabVelocity = 3.0f;
     public float heightToRoll = 10.0f;
 
-    [SerializeField]
+    [Header("===== Friction Settings =====")]
+    public PhysicMaterial frictionOne;
+    public PhysicMaterial frictionZero;
+    private CapsuleCollider col;
+
     private Animator anim;
     private Rigidbody rigid;
     private Vector3 planarVec;
@@ -21,15 +25,14 @@ public class ActorController : MonoBehaviour {
 
     private bool isCanAttack = true;
     private bool isCanJump = true;
-
-    public bool islockPlanar = false;
-
+    private bool islockPlanar = false;
 
     private void Awake()
     {
         pi = GetComponent<PlayerInput>();
         anim = model.GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
+        col = GetComponent<CapsuleCollider>();
     }
 
     private void FixedUpdate()
@@ -111,8 +114,14 @@ public class ActorController : MonoBehaviour {
     {
         pi.inputEnable = true;
         islockPlanar = false;
+        col.material = frictionOne;
 
         isCanAttack = true;
+    }
+
+    public void OnGroundExit()
+    {
+        col.material = frictionZero;
     }
 
     public void  OnFallEnter()

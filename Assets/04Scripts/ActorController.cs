@@ -19,6 +19,8 @@ public class ActorController : MonoBehaviour {
     private Vector3 planarVec;
     private Vector3 thrustVec;
 
+    private bool isCanAttack = true;
+    private bool isCanJump = true;
 
     public bool islockPlanar = false;
 
@@ -36,14 +38,18 @@ public class ActorController : MonoBehaviour {
         float targetRunMulti = (pi.run) ? 2.0f : 1.0f;
         anim.SetFloat("forward", pi.Dmag * Mathf.Lerp(anim.GetFloat("forward"), targetRunMulti, 0.5f));
 
-        if (pi.jump == true)
+        if (pi.jump == true && isCanJump)
         {
             anim.SetTrigger("jump");
+
+            isCanAttack = false;
         }
 
-        if(pi.attack == true)
+        if(pi.attack == true && CheckState("ground") && isCanAttack)
         {
             anim.SetTrigger("attack");
+
+            isCanJump = false;
         }
 
         if (pi.Dmag > 0.1f)
@@ -51,6 +57,7 @@ public class ActorController : MonoBehaviour {
             //model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.5f);
             model.transform.forward = pi.Dvec;
         }
+
 
         if (islockPlanar==false)
         {
@@ -65,6 +72,12 @@ public class ActorController : MonoBehaviour {
         {
             anim.SetTrigger("roll");
         }
+    }
+
+    private bool CheckState(string stateName, string layerName = "Base Layer")
+    {
+        //判断当前的动画机是否属于某状态
+        return anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex(layerName)).IsName(stateName);
     }
 
     /// <summary>
@@ -98,6 +111,8 @@ public class ActorController : MonoBehaviour {
     {
         pi.inputEnable = true;
         islockPlanar = false;
+
+        isCanAttack = true;
     }
 
     public void  OnFallEnter()
@@ -139,6 +154,8 @@ public class ActorController : MonoBehaviour {
     {
         pi.inputEnable = true;
         anim.SetLayerWeight(anim.GetLayerIndex("attack"), 0);
+
+        isCanJump = true;
     }
 
 }

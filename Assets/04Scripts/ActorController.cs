@@ -27,6 +27,8 @@ public class ActorController : MonoBehaviour {
     private bool isCanJump = true;
     private bool islockPlanar = false;
 
+    private float lerpTarget;
+
     private void Awake()
     {
         pi = GetComponent<PlayerInput>();
@@ -151,20 +153,43 @@ public class ActorController : MonoBehaviour {
     public void OnAttack1hAEnter()
     {
         pi.inputEnable = false;
-        anim.SetLayerWeight(anim.GetLayerIndex("attack"), 1.0f);
+
+        lerpTarget = 1.0f;
     }
 
+
     public void OnAttack1hAUpdate()
-    {
-        thrustVec = model.transform.forward * anim.GetFloat("attack1hAVelocity");
+    {//单手攻击A
+        //前移
+        thrustVec = model.transform.forward * anim.GetFloat("attack1hVelocity");
+
+        //改attack layer的权重 0→1
+        anim.SetLayerWeight(anim.GetLayerIndex("attack"), Mathf.Lerp(anim.GetLayerWeight(anim.GetLayerIndex("attack")), lerpTarget, 0.1f));
+    }
+
+    public void OnAttack1hBUpdate()
+    {//单手攻击B
+        //前移
+        thrustVec = model.transform.forward * anim.GetFloat("attack1hVelocity");
+    }
+
+    public void OnAttack1hCUpdate()
+    {//单手攻击C
+        //前移
+        thrustVec = model.transform.forward * anim.GetFloat("attack1hVelocity");
     }
 
     public void OnAttackIdleEnter()
     {
         pi.inputEnable = true;
-        anim.SetLayerWeight(anim.GetLayerIndex("attack"), 0);
+        lerpTarget = 0;
 
         isCanJump = true;
+    }
+
+    public void OnAttackIdleUpdate()
+    {
+        anim.SetLayerWeight(anim.GetLayerIndex("attack"), Mathf.Lerp(anim.GetLayerWeight(anim.GetLayerIndex("attack")), lerpTarget, 0.1f));
     }
 
 }

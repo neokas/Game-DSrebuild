@@ -29,6 +29,8 @@ public class ActorController : MonoBehaviour {
 
     private float lerpTarget;
 
+    private Vector3 deltaPos;
+
     private void Awake()
     {
         pi = GetComponent<PlayerInput>();
@@ -68,10 +70,11 @@ public class ActorController : MonoBehaviour {
         {
             planarVec = pi.Dmag * model.transform.forward * walkSpeed * ((pi.run) ? runMultiplier : 1.0f);
         }
- 
-        //rigid.position += planarVec * Time.fixedDeltaTime;
+
+        rigid.position += deltaPos;
         rigid.velocity = new Vector3(planarVec.x, rigid.velocity.y, planarVec.z)+thrustVec;
         thrustVec = Vector3.zero;
+        deltaPos = Vector3.zero;
 
         if(rigid.velocity.magnitude >heightToRoll)
         {
@@ -161,7 +164,7 @@ public class ActorController : MonoBehaviour {
     public void OnAttack1hAUpdate()
     {//单手攻击A
         //前移
-        thrustVec = model.transform.forward * anim.GetFloat("attack1hVelocity");
+        //thrustVec = model.transform.forward * anim.GetFloat("attack1hVelocity");
 
         //改attack layer的权重 0→1
         anim.SetLayerWeight(anim.GetLayerIndex("attack"), Mathf.Lerp(anim.GetLayerWeight(anim.GetLayerIndex("attack")), lerpTarget, 0.1f));
@@ -174,9 +177,9 @@ public class ActorController : MonoBehaviour {
     }
 
     public void OnAttack1hCUpdate()
-    {//单手攻击C
+    {//单手攻击C,交给motion控制
         //前移
-        thrustVec = model.transform.forward * anim.GetFloat("attack1hVelocity");
+        //thrustVec = model.transform.forward * anim.GetFloat("attack1hVelocity");
     }
 
     public void OnAttackIdleEnter()
@@ -190,6 +193,14 @@ public class ActorController : MonoBehaviour {
     public void OnAttackIdleUpdate()
     {
         anim.SetLayerWeight(anim.GetLayerIndex("attack"), Mathf.Lerp(anim.GetLayerWeight(anim.GetLayerIndex("attack")), lerpTarget, 0.1f));
+    }
+
+    public void OnUpdateRM(object _deltaPos)
+    {
+        if (CheckState("attack1hC", "attack")|| CheckState("attack1hA", "attack"))
+        {
+            deltaPos += (Vector3)_deltaPos;
+        }
     }
 
 }

@@ -173,11 +173,11 @@ public class ActorController : MonoBehaviour {
     public void OnAttack1hBUpdate()
     {//单手攻击B
         //前移
-        thrustVec = model.transform.forward * anim.GetFloat("attack1hVelocity");
+        //thrustVec = model.transform.forward * anim.GetFloat("attack1hVelocity");
     }
 
     public void OnAttack1hCUpdate()
-    {//单手攻击C,交给motion控制
+    {//单手攻击C
         //前移
         //thrustVec = model.transform.forward * anim.GetFloat("attack1hVelocity");
     }
@@ -196,11 +196,12 @@ public class ActorController : MonoBehaviour {
     }
 
     public void OnUpdateRM(object _deltaPos)
-    {
-        if (CheckState("attack1hC", "attack")|| CheckState("attack1hA", "attack"))
+    {//motion 控制动画位移
+        if (CheckState("attack1hA", "attack")|| 
+            CheckState("attack1hB", "attack")||
+            CheckState("attack1hC", "attack"))
         {
             deltaPos += (Vector3)_deltaPos;
         }
     }
-
 }

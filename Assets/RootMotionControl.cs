@@ -6,7 +6,6 @@ public class RootMotionControl : MonoBehaviour {
 
     public Animator anim;
 
-
     private void Awake()
     {
         anim = GetComponent<Animator>();

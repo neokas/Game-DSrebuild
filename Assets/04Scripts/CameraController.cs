@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-    public PlayerInput pi;
+    private JoystickInput pi;
     public float horizontalSpeed = 100.0f;
     public float verticalSpeed = 100.0f;
     public float cameraDampValue = 0.05f;
@@ -23,6 +23,7 @@ public class CameraController : MonoBehaviour {
         cameraHandle = transform.parent.gameObject;
         playerHandle = cameraHandle.transform.parent.gameObject;
         model = playerHandle.GetComponent<ActorController>().model;
+        pi = playerHandle.GetComponent<JoystickInput>();
         camera = Camera.main.gameObject;
 	}
 

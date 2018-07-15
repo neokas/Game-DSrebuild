@@ -5,7 +5,7 @@ using UnityEngine;
 public class ActorController : MonoBehaviour {
 
     public GameObject model;
-    public PlayerInput pi;
+    public JoystickInput pi;
     public float walkSpeed = 2.4f;
     public float runMultiplier = 2.0f;
     public float jumpVelocity = 3.0f;
@@ -33,7 +33,7 @@ public class ActorController : MonoBehaviour {
 
     private void Awake()
     {
-        pi = GetComponent<PlayerInput>();
+        pi = GetComponent<JoystickInput>();
         anim = model.GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();

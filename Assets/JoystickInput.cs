@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JoystickInput : MonoBehaviour
+public class JoystickInput : IUserInput
 {
     [Header("===== Joystick Settings =====")]
     //左摇杆
@@ -24,32 +24,32 @@ public class JoystickInput : MonoBehaviour
     private string btn7 = "btn7";
     //
 
-    [Header("===== Output signals =====")]
-    //方向，运动
-    public float Dup;
-    public float Dright;
-    public float Dmag;
-    public Vector3 Dvec;
-    //摄影机控制 
-    public float Camera_up;
-    public float Camera_right;
+    //[Header("===== Output signals =====")]
+    ////方向，运动
+    //public float Dup;
+    //public float Dright;
+    //public float Dmag;
+    //public Vector3 Dvec;
+    ////摄影机控制 
+    //public float Camera_up;
+    //public float Camera_right;
 
-    //跑步
-    public bool run;
-    //跳跃
-    public bool jump;
-    public bool lastJump;
-    //攻击
-    public bool attack;
-    public bool lastAttack;
+    ////跑步
+    //public bool run;
+    ////跳跃
+    //public bool jump;
+    //public bool lastJump;
+    ////攻击
+    //public bool attack;
+    //public bool lastAttack;
 
-    [Header("===== Others =====")]
-    public bool inputEnable = true;
+    //[Header("===== Others =====")]
+    //public bool inputEnable = true;
 
-    private float tragetDup;
-    private float tragetDright;
-    private float velocityDup;
-    private float velocityDright;
+    //private float tragetDup;
+    //private float tragetDright;
+    //private float velocityDup;
+    //private float velocityDright;
 
 
     // Use this for initialization
@@ -112,13 +112,13 @@ public class JoystickInput : MonoBehaviour
 
     }
 
-    //坐标转换 矩形→圆形
-    private Vector2 SquareToCircle(Vector2 input)
-    {
-        Vector2 output = Vector2.zero;
-        output.x = input.x * Mathf.Sqrt(1 - (input.y * input.y) / 2.0f);
-        output.y = input.y * Mathf.Sqrt(1 - (input.x * input.x) / 2.0f);
+    ////坐标转换 矩形→圆形
+    //private Vector2 SquareToCircle(Vector2 input)
+    //{
+    //    Vector2 output = Vector2.zero;
+    //    output.x = input.x * Mathf.Sqrt(1 - (input.y * input.y) / 2.0f);
+    //    output.y = input.y * Mathf.Sqrt(1 - (input.x * input.x) / 2.0f);
 
-        return output;
-    }
+    //    return output;
+    //}
 }

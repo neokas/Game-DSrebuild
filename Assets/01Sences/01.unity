@@ -234,7 +234,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e50785eab6db947a5d013c3179c62e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pi: {fileID: 1111308681}
   horizontalSpeed: 100
   verticalSpeed: 100
   cameraDampValue: 0.05
@@ -547,6 +546,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cb7f2a8f31d0f649815ecd76c87dd24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Dup: 0
+  Dright: 0
+  Dmag: 0
+  Dvec: {x: 0, y: 0, z: 0}
+  Camera_up: 0
+  Camera_right: 0
+  run: 0
+  jump: 0
+  attack: 0
+  inputEnable: 1
   left_keyUp: w
   left_keyDown: s
   left_keyLeft: a
@@ -559,18 +568,6 @@ MonoBehaviour:
   right_keyDown: down
   right_keyLeft: left
   right_keyRight: right
-  Dup: 0
-  Dright: 0
-  Dmag: 0
-  Dvec: {x: 0, y: 0, z: 0}
-  Camera_up: 0
-  Camera_right: 0
-  run: 0
-  jump: 0
-  lastJump: 0
-  attack: 0
-  lastAttack: 0
-  inputEnable: 1
 --- !u!114 &1111308682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,8 +579,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b76f1539e0a3145815a88452ed69d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axisX: axixX
-  axisY: axixY
   Dup: 0
   Dright: 0
   Dmag: 0
@@ -592,9 +587,7 @@ MonoBehaviour:
   Camera_right: 0
   run: 0
   jump: 0
-  lastJump: 0
   attack: 0
-  lastAttack: 0
   inputEnable: 1
 --- !u!1 &1562124274
 GameObject:

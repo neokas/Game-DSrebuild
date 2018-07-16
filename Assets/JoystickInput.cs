@@ -11,6 +11,18 @@ public class JoystickInput : MonoBehaviour
     //右摇杆
     private string axisRX = "axis4";
     private string axisRY = "axis5";
+    //A:0 B:1 X:2 Y:3
+    private string btnA = "btn0";
+    private string btnB = "btn1";
+    private string btnX = "btn2";
+    private string btnY = "btn3";
+    //LB:4 RB:5
+    private string btn4 = "btn4";
+    private string btn5 = "btn5";
+    //back:6 menu:7
+    private string btn6 = "btn6";
+    private string btn7 = "btn7";
+    //
 
     [Header("===== Output signals =====")]
     //方向，运动
@@ -69,6 +81,34 @@ public class JoystickInput : MonoBehaviour
 
         Dmag = Mathf.Sqrt((Dup2 * Dup2) + (Dright2 * Dright2));
         Dvec = Dright2 * transform.right + Dup2 * transform.forward;
+
+        run = Input.GetButton(btnA);
+
+        //跳跃控制
+        bool newJump = Input.GetButton(btnB);
+        //jump = newJump;
+        if (newJump != lastJump && newJump == true)
+        {
+            jump = true;
+        }
+        else
+        {
+            jump = false;
+        }
+        lastJump = newJump;
+
+        //攻击控制
+        bool newAttack = Input.GetButton(btnX);
+        //jump = newJump;
+        if (newAttack != lastAttack && newAttack == true)
+        {
+            attack = true;
+        }
+        else
+        {
+            attack = false;
+        }
+        lastAttack = newAttack;
 
     }
 

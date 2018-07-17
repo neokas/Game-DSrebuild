@@ -25,6 +25,7 @@ public class ActorController : MonoBehaviour {
 
     private bool isCanAttack = true;
     private bool isCanJump = true;
+    private bool isCanGuard = true;
     private bool islockPlanar = false;
 
     private float lerpTarget;
@@ -52,12 +53,14 @@ public class ActorController : MonoBehaviour {
 
         float targetRunMulti = (pi.run) ? 2.0f : 1.0f;
         anim.SetFloat("forward", pi.Dmag * Mathf.Lerp(anim.GetFloat("forward"), targetRunMulti, 0.5f));
+        anim.SetBool("defense", pi.defense);
 
         if (pi.jump == true && isCanJump)
         {
             anim.SetTrigger("jump");
 
             isCanAttack = false;
+            isCanGuard = false;
         }
 
         if(pi.attack == true && CheckState("ground") && isCanAttack)
@@ -65,7 +68,9 @@ public class ActorController : MonoBehaviour {
             anim.SetTrigger("attack");
 
             isCanJump = false;
+            isCanGuard = false;
         }
+
 
         if (pi.Dmag > 0.1f)
         {

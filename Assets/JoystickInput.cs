@@ -19,6 +19,9 @@ public class JoystickInput : IUserInput
     //LB:4 RB:5
     private string btn4 = "btn4";
     private string btn5 = "btn5";
+    //LT:9 RT:10
+    private string btn9 = "btn9";
+    private string btn10 = "btn10";
     //back:6 menu:7
     private string btn6 = "btn6";
     private string btn7 = "btn7";
@@ -71,7 +74,7 @@ public class JoystickInput : IUserInput
             tragetDup = 0;
             tragetDright = 0;
         }
-
+        
         Dup = Mathf.SmoothDamp(Dup, tragetDup, ref velocityDup, 0.1f);
         Dright = Mathf.SmoothDamp(Dright, tragetDright, ref velocityDright, 0.1f);
 
@@ -83,6 +86,7 @@ public class JoystickInput : IUserInput
         Dvec = Dright2 * transform.right + Dup2 * transform.forward;
 
         run = Input.GetButton(btnA);
+        defense = Input.GetButton(btn4);
 
         //跳跃控制
         bool newJump = Input.GetButton(btnB);

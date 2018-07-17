@@ -313,7 +313,7 @@ GameObject:
   - component: {fileID: 407462015}
   - component: {fileID: 407462014}
   - component: {fileID: 407462013}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -447,10 +447,6 @@ Prefab:
 --- !u!4 &425442820 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400138, guid: 2f9d958fbcd96e44ca35a77a15e3187a, type: 3}
-  m_PrefabInternal: {fileID: 425442819}
---- !u!4 &425442821 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 400018, guid: 2f9d958fbcd96e44ca35a77a15e3187a, type: 3}
   m_PrefabInternal: {fileID: 425442819}
 --- !u!4 &881700082 stripped
 Transform:
@@ -645,6 +641,7 @@ MonoBehaviour:
   Camera_up: 0
   Camera_right: 0
   run: 0
+  defense: 0
   jump: 0
   attack: 0
   inputEnable: 1
@@ -678,9 +675,14 @@ MonoBehaviour:
   Camera_up: 0
   Camera_right: 0
   run: 0
+  defense: 0
   jump: 0
   attack: 0
   inputEnable: 1
+--- !u!4 &1444995258 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400016, guid: 2f9d958fbcd96e44ca35a77a15e3187a, type: 3}
+  m_PrefabInternal: {fileID: 425442819}
 --- !u!1 &1520715241
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,13 +704,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1520715241}
-  m_LocalRotation: {x: -0.0026105386, y: 0.0000023475827, z: 0.045274958, w: 0.9989712}
-  m_LocalPosition: {x: -0, y: 0.078, z: 0}
+  m_LocalRotation: {x: -0.0025845754, y: 0.0000012156429, z: 0.045274958, w: 0.9989713}
+  m_LocalPosition: {x: -0.136, y: 0.078, z: 0.008}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 407462012}
-  m_Father: {fileID: 425442821}
-  m_RootOrder: 5
+  m_Father: {fileID: 1444995258}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -0.29900002, y: -0.013, z: 5.19}
 --- !u!1 &1562124274
 GameObject:
@@ -777,6 +779,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ec6e5538461cb49a0eef24524aed4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  a: {x: -32.5, y: 0, z: 15}
+  OnGuard: {x: -32.5, y: 0, z: 15}
+  UnGuard: {x: -35, y: -65, z: 10}
+  isOnGuard: 0
 --- !u!1 &1736094108
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,7 +794,7 @@ GameObject:
   - component: {fileID: 1736094112}
   - component: {fileID: 1736094111}
   - component: {fileID: 1736094110}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -16,6 +16,7 @@ public abstract class IUserInput : MonoBehaviour {
 
     //跑步
     public bool run;
+    public bool defense;
     //跳跃
     public bool jump;
     protected bool lastJump;

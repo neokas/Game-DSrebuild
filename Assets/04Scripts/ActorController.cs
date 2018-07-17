@@ -209,7 +209,7 @@ public class ActorController : MonoBehaviour {
             CheckState("attack1hB", "attack")||
             CheckState("attack1hC", "attack"))
         {
-            deltaPos += (Vector3)_deltaPos;
+            deltaPos += (0.2f *deltaPos+ 0.8f*(Vector3)_deltaPos)/1.0f;
         }
     }
 }

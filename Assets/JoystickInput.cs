@@ -17,11 +17,11 @@ public class JoystickInput : IUserInput
     private string btnX = "btn2";
     private string btnY = "btn3";
     //LB:4 RB:5
-    private string btn4 = "btn4";
-    private string btn5 = "btn5";
+    private string btnLB = "btn4";
+    private string btnRB = "btn5";
     //LT:9 RT:10
-    private string btn9 = "btn9";
-    private string btn10 = "btn10";
+    private string btnLT = "btn9";
+    private string btnRT = "btn10";
     //back:6 menu:7
     private string btn6 = "btn6";
     private string btn7 = "btn7";
@@ -86,7 +86,7 @@ public class JoystickInput : IUserInput
         Dvec = Dright2 * transform.right + Dup2 * transform.forward;
 
         run = Input.GetButton(btnA);
-        defense = Input.GetButton(btn4);
+        defense = Input.GetButton(btnLB);
 
         //跳跃控制
         bool newJump = Input.GetButton(btnB);

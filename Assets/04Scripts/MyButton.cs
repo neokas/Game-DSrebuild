@@ -8,18 +8,25 @@ public class MyButton{
     public bool onPressed = false;
     public bool onReleased = false;
     public bool isExtending = false;
+    public bool isDelaying = false;
 
-    public float extendingDuration = 0.15f;
+    //双击间隔时间
+    public float extendingDuration = 0.3f;
+
+    //长按 需求时间
+    public float delayingDuration = 0.4f;
 
     private bool currentState = false;
     private bool lastState = false;
 
     private MyTimer extTimer = new MyTimer();
+    private MyTimer delayTimer = new MyTimer();
 
     public void Tick(bool input)
     {
 
         extTimer.Tick();
+        delayTimer.Tick();
 
         currentState = input;
 
@@ -27,16 +34,20 @@ public class MyButton{
 
         onPressed = false;
         onReleased = false;
+        isExtending = false;
+        isDelaying = false;
+
         if (currentState != lastState)
         {
             if (currentState == true)
             {
                 onPressed = true;
+                StartTimer(delayTimer, delayingDuration); //按下 长按计时
             }
             else
             {
                 onReleased = true;
-                StartTimer(extTimer, extendingDuration);
+                StartTimer(extTimer, extendingDuration); //释放后 双击接受计时
             }
         }
 
@@ -47,9 +58,10 @@ public class MyButton{
         {
             isExtending = true;
         }
-        else
+
+        if(delayTimer.state == MyTimer.STATE.RUN)
         {
-            isExtending = false;
+            isDelaying = true;
         }
     }
 

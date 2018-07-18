@@ -99,10 +99,11 @@ public class JoystickInput : IUserInput
         Dmag = Mathf.Sqrt((Dup2 * Dup2) + (Dright2 * Dright2));
         Dvec = Dright2 * transform.right + Dup2 * transform.forward;
 
-        run = buttonA.isPressing;//跑
-        defense = buttonLB.isPressing;//防御
+        run = (buttonA.isPressing && !buttonA.isDelaying) || buttonA.isExtending;   //跑
+        jump = buttonA.isExtending && buttonA.onPressed;//跳跃
 
-        jump = buttonB.onPressed;//跳跃
+        roll = buttonA.onReleased && buttonA.isDelaying; //翻滚
+        defense = buttonLB.isPressing;//防御
         attack = buttonX.onPressed;//攻击
     }
 

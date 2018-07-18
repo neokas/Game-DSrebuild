@@ -26,6 +26,7 @@ public class ActorController : MonoBehaviour {
     private bool isCanAttack = true;
     private bool isCanJump = true;
     private bool isCanGuard = true;
+    private bool isCanRoll = true;
     private bool islockPlanar = false;
 
     private float lerpTarget;
@@ -51,14 +52,15 @@ public class ActorController : MonoBehaviour {
     private void FixedUpdate()
     {
 
-        float targetRunMulti = (pi.run) ? 2.0f : 1.0f;
-        anim.SetFloat("forward", pi.Dmag * Mathf.Lerp(anim.GetFloat("forward"), targetRunMulti, 0.5f));
-        anim.SetBool("defense", pi.defense);
+        //float targetRunMulti = (pi.run) ? 2.0f : 1.0f;
+        anim.SetFloat("forward", pi.Dmag * Mathf.Lerp(anim.GetFloat("forward"), 1.0f, 0.5f));
 
-        if (pi.jump == true && isCanJump)
+        anim.SetBool("defense", pi.defense);
+        anim.SetBool("run", pi.run);
+
+        if (pi.jump && isCanJump)
         {
             anim.SetTrigger("jump");
-
             isCanAttack = false;
             isCanGuard = false;
         }
@@ -68,7 +70,7 @@ public class ActorController : MonoBehaviour {
             anim.SetTrigger("attack");
 
             isCanJump = false;
-            isCanGuard = false;
+            isCanRoll = false;
         }
 
 
@@ -77,7 +79,6 @@ public class ActorController : MonoBehaviour {
             //model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.5f);
             model.transform.forward = pi.Dvec;
         }
-
 
         if (islockPlanar==false)
         {
@@ -89,9 +90,11 @@ public class ActorController : MonoBehaviour {
         thrustVec = Vector3.zero;
         deltaPos = Vector3.zero;
 
-        if(rigid.velocity.magnitude >heightToRoll)
+        if((pi.roll && isCanRoll) || rigid.velocity.magnitude>7f)
         {
             anim.SetTrigger("roll");
+            isCanAttack = false;
+            isCanGuard = false;
         }
     }
 
@@ -135,6 +138,7 @@ public class ActorController : MonoBehaviour {
         col.material = frictionOne;
 
         isCanAttack = true;
+        isCanGuard = true;
     }
 
     public void OnGroundExit()
@@ -201,6 +205,7 @@ public class ActorController : MonoBehaviour {
         lerpTarget = 0;
 
         isCanJump = true;
+        isCanRoll = true;
     }
 
     public void OnAttackIdleUpdate()

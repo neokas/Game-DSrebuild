@@ -24,6 +24,12 @@ public class KeyboardInput : IUserInput{
     public string right_keyLeft;
     public string right_keyRight;
 
+    [Header("===== Mouse settings =====")]
+    public bool isMouseEnable = false;
+    public float mouseSensitivityX = 1.0f;
+    public float mouseSensitivityY = 1.0f;
+
+
     //信号，在Inspector观察值的变化
     //[Header("===== Output signals =====")]
     ////方向，运动
@@ -52,8 +58,8 @@ public class KeyboardInput : IUserInput{
     //private float velocityDup;
     //private float velocityDright;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -61,8 +67,16 @@ public class KeyboardInput : IUserInput{
 	void Update () {
 
         //摄影机控制
-        Camera_up = (Input.GetKey(right_keyUp) ? 1.0f : 0) - (Input.GetKey(right_keyDown) ? 1.0f : 0);
-        Camera_right = (Input.GetKey(right_keyRight) ? 1.0f : 0) - (Input.GetKey(right_keyLeft) ? 1.0f : 0);
+        if (isMouseEnable)
+        {
+            Camera_up = Input.GetAxis("Mouse Y") * mouseSensitivityY * 3f;
+            Camera_right = Input.GetAxis("Mouse X") * mouseSensitivityX * 2.5f;
+        }
+        else
+        {
+            Camera_up = (Input.GetKey(right_keyUp) ? 1.0f : 0) - (Input.GetKey(right_keyDown) ? 1.0f : 0);
+            Camera_right = (Input.GetKey(right_keyRight) ? 1.0f : 0) - (Input.GetKey(right_keyLeft) ? 1.0f : 0);
+        }
 
 
         //奔跑及方向控制
@@ -86,6 +100,7 @@ public class KeyboardInput : IUserInput{
         Dvec = Dright2 * transform.right + Dup2 * transform.forward;
 
         run = Input.GetKey(keyA);
+        defense = Input.GetKey(keyD);
 
         //跳跃控制
         bool newJump = Input.GetKey(keyB);

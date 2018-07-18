@@ -25,8 +25,15 @@ public class JoystickInput : IUserInput
     //back:6 menu:7
     private string btn6 = "btn6";
     private string btn7 = "btn7";
-    //
 
+    public MyButton buttonA = new MyButton();
+    public MyButton buttonB = new MyButton();
+    public MyButton buttonX = new MyButton();
+    public MyButton buttonY = new MyButton();
+    public MyButton buttonLB = new MyButton();
+    public MyButton buttonLT = new MyButton();
+    
+    
     //[Header("===== Output signals =====")]
     ////方向，运动
     //public float Dup;
@@ -62,6 +69,13 @@ public class JoystickInput : IUserInput
 	
 	// Update is called once per frame
 	void Update () {
+        buttonA.Tick(Input.GetButton(btnA));
+        buttonB.Tick(Input.GetButton(btnB));
+        buttonX.Tick(Input.GetButton(btnX));
+        buttonY.Tick(Input.GetButton(btnY));
+        buttonLB.Tick(Input.GetButton(btnLB));
+        buttonLT.Tick(Input.GetButton(btnLT));
+
         //摄影机控制
         Camera_up = Input.GetAxis(axisRY);
         Camera_right = Input.GetAxis(axisRX);
@@ -85,35 +99,11 @@ public class JoystickInput : IUserInput
         Dmag = Mathf.Sqrt((Dup2 * Dup2) + (Dright2 * Dright2));
         Dvec = Dright2 * transform.right + Dup2 * transform.forward;
 
-        run = Input.GetButton(btnA);
-        defense = Input.GetButton(btnLB);
+        run = buttonA.isPressing;//跑
+        defense = buttonLB.isPressing;//防御
 
-        //跳跃控制
-        bool newJump = Input.GetButton(btnB);
-        //jump = newJump;
-        if (newJump != lastJump && newJump == true)
-        {
-            jump = true;
-        }
-        else
-        {
-            jump = false;
-        }
-        lastJump = newJump;
-
-        //攻击控制
-        bool newAttack = Input.GetButton(btnX);
-        //jump = newJump;
-        if (newAttack != lastAttack && newAttack == true)
-        {
-            attack = true;
-        }
-        else
-        {
-            attack = false;
-        }
-        lastAttack = newAttack;
-
+        jump = buttonB.onPressed;//跳跃
+        attack = buttonX.onPressed;//攻击
     }
 
     ////坐标转换 矩形→圆形

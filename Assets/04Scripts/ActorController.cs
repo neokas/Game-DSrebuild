@@ -61,11 +61,11 @@ public class ActorController : MonoBehaviour {
     private void FixedUpdate()
     {
 
-        //float targetRunMulti = (pi.run) ? 2.0f : 1.0f;
-        anim.SetFloat("forward", pi.Dmag * Mathf.Lerp(anim.GetFloat("forward"), 1.0f, 0.5f));
+        float targetRunMulti = (pi.run) ? 2.0f : 1.0f;
+        anim.SetFloat("forward", pi.Dmag * Mathf.Lerp(anim.GetFloat("forward"), targetRunMulti, 0.5f));
 
         anim.SetBool("defense", pi.defense);
-        anim.SetBool("run", pi.run);
+        //anim.SetBool("run", pi.run);
 
         if (pi.jump && isCanJump)
         {

@@ -19,24 +19,27 @@ public class LeftArmAnimFix : MonoBehaviour {
 
     private void OnAnimatorIK()
     {
-        if (anim.GetBool("defense") == false)
+        if(anim.GetBool("isGround"))
         {
-            if (isOnGuard)
+            if (anim.GetBool("defense") == false)
             {
-                a = OnGuard;
-            }
-            else
-            {
-                a = UnGuard;
-            }
+                if (isOnGuard)
+                {
+                    a = OnGuard;
+                }
+                else
+                {
+                    a = UnGuard;
+                }
 
-            Transform leftLowerArm = anim.GetBoneTransform(HumanBodyBones.LeftLowerArm);
-            leftLowerArm.localEulerAngles += a;
-            //Vector3 temp = leftLowerArm.localEulerAngles;
-            //Vector3 target = leftLowerArm.localEulerAngles + a;
-            //Vector3 temp = Vector3.Lerp(leftLowerArm.localEulerAngles, target, 0.1f);
-            //print(temp);
-            anim.SetBoneLocalRotation(HumanBodyBones.LeftLowerArm, Quaternion.Euler(leftLowerArm.localEulerAngles));
+                Transform leftLowerArm = anim.GetBoneTransform(HumanBodyBones.LeftLowerArm);
+                leftLowerArm.localEulerAngles += a;
+                //Vector3 temp = leftLowerArm.localEulerAngles;
+                //Vector3 target = leftLowerArm.localEulerAngles + a;
+                //Vector3 temp = Vector3.Lerp(leftLowerArm.localEulerAngles, target, 0.1f);
+                //print(temp);
+                anim.SetBoneLocalRotation(HumanBodyBones.LeftLowerArm, Quaternion.Euler(leftLowerArm.localEulerAngles));
+            }
         }
     }
 

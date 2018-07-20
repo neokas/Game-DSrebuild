@@ -25,6 +25,8 @@ public abstract class IUserInput : MonoBehaviour {
     protected bool lastAttack;
     //翻滚
     public bool roll;
+    //锁定
+    public bool lockon;
 
     [Header("===== Others =====")]
     public bool inputEnable = true;

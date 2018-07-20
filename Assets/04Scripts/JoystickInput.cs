@@ -19,12 +19,15 @@ public class JoystickInput : IUserInput
     //LB:4 RB:5
     private string btnLB = "btn4";
     private string btnRB = "btn5";
-    //LT:9 RT:10
-    private string btnLT = "btn9";
-    private string btnRT = "btn10";
+    //LT RT (是以axis方式接受的，使用需要转换为bool型)
+    private string btnLT = "axis9";
+    private string btnRT = "axis10";
     //back:6 menu:7
     private string btn6 = "btn6";
     private string btn7 = "btn7";
+    //L3:8 R3:9  Left/Right Stick Click
+    private string btnLSC = "btn8";
+    private string btnRSC = "btn9";
 
     public MyButton buttonA = new MyButton();
     public MyButton buttonB = new MyButton();
@@ -32,6 +35,10 @@ public class JoystickInput : IUserInput
     public MyButton buttonY = new MyButton();
     public MyButton buttonLB = new MyButton();
     public MyButton buttonLT = new MyButton();
+    public MyButton buttonRB = new MyButton();
+    public MyButton buttonRT = new MyButton();
+    public MyButton buttonLSC = new MyButton();
+    public MyButton buttonRSC = new MyButton();
     
     
     //[Header("===== Output signals =====")]
@@ -64,7 +71,7 @@ public class JoystickInput : IUserInput
 
     // Use this for initialization
     void Start () {
-		
+        lockon = false;
 	}
 	
 	// Update is called once per frame
@@ -74,7 +81,11 @@ public class JoystickInput : IUserInput
         buttonX.Tick(Input.GetButton(btnX));
         buttonY.Tick(Input.GetButton(btnY));
         buttonLB.Tick(Input.GetButton(btnLB));
-        buttonLT.Tick(Input.GetButton(btnLT));
+        buttonLT.Tick((Input.GetAxis(btnLT) > 0 ? true : false));
+        buttonRB.Tick(Input.GetButton(btnRB));
+        buttonRT.Tick((Input.GetAxis(btnRT) > 0 ? true : false));
+        buttonLSC.Tick(Input.GetButton(btnLSC));
+        buttonRSC.Tick(Input.GetButton(btnRSC));
 
         //摄影机控制
         Camera_up = Input.GetAxis(axisRY);
@@ -105,6 +116,8 @@ public class JoystickInput : IUserInput
         roll = buttonA.onReleased && buttonA.isDelaying; //翻滚
         defense = buttonLB.isPressing;//防御
         attack = buttonX.onPressed;//攻击
+
+        lockon = buttonRSC.onPressed; //锁定
     }
 
     ////坐标转换 矩形→圆形

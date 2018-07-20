@@ -5,6 +5,7 @@ using UnityEngine;
 public class ActorController : MonoBehaviour {
 
     public GameObject model;
+    public CameraController CameraCon;
     public IUserInput pi;
     public float walkSpeed = 2.4f;
     public float runMultiplier = 2.0f;
@@ -49,6 +50,14 @@ public class ActorController : MonoBehaviour {
         col = GetComponent<CapsuleCollider>();
     }
 
+    private void Update()
+    {
+        if(pi.lockon)
+        {
+            CameraCon.LockUnLock();
+        }
+    }
+
     private void FixedUpdate()
     {
 
@@ -73,16 +82,26 @@ public class ActorController : MonoBehaviour {
             isCanRoll = false;
         }
 
-
-        if (pi.Dmag > 0.1f)
+        if (CameraCon.LockState == false)
         {
-            //model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.5f);
-            model.transform.forward = pi.Dvec;
+            if (pi.Dmag > 0.1f)
+            {
+                //model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.5f);
+                model.transform.forward = pi.Dvec;
+            }
+
+            if (islockPlanar == false)
+            {
+                planarVec = pi.Dmag * model.transform.forward * walkSpeed * ((pi.run) ? runMultiplier : 1.0f);
+            }
         }
-
-        if (islockPlanar==false)
+        else
         {
-            planarVec = pi.Dmag * model.transform.forward * walkSpeed * ((pi.run) ? runMultiplier : 1.0f);
+            model.transform.forward = transform.forward;
+            if (islockPlanar == false)
+            {
+                planarVec = pi.Dvec * ((pi.run) ? runMultiplier : 1.0f);
+            }
         }
 
         rigid.position += deltaPos;

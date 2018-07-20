@@ -19,7 +19,8 @@ public class CameraController : MonoBehaviour {
 
     private Vector3 cameraDampVelocity;
 
-    public GameObject lockTarget;
+    [SerializeField]
+    private LockTarget lockTarget;
     public bool LockState;
    
 
@@ -45,6 +46,21 @@ public class CameraController : MonoBehaviour {
         lockDot.enabled = false;
     }
 
+    private void Update()
+    {
+        if(lockTarget !=null)
+        {
+            lockDot.rectTransform.position = Camera.main.WorldToScreenPoint(lockTarget.obj.transform.position + new Vector3(0, lockTarget.halfHeight, 0));
+
+            if(Vector3.Distance(model.transform.position,lockTarget.obj.transform.position)>10.0f)
+            {
+                lockTarget = null;
+                lockDot.enabled = false;
+                LockState = false;
+            }
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate() {
 
@@ -64,9 +80,10 @@ public class CameraController : MonoBehaviour {
         }
         else
         {
-            Vector3 tempForward = lockTarget.transform.position - model.transform.position;
+            Vector3 tempForward = lockTarget.obj.transform.position - model.transform.position;
             tempForward.y = 0;
             playerHandle.transform.forward = tempForward;
+            cameraHandle.transform.LookAt(lockTarget.obj.transform);
         }
 
         //相机跟随 抖动太强，将Update方法修改为FixedUpdate
@@ -95,26 +112,32 @@ public class CameraController : MonoBehaviour {
         {
             foreach (var col in cols)
             {
-                if(lockTarget == col.gameObject)
+                if(lockTarget !=null && lockTarget.obj == col.gameObject)
                 {
                     lockTarget = null;
                     lockDot.enabled = false;
                     LockState = false;
                     break;
                 }
-                lockTarget = col.gameObject;
+                lockTarget = new LockTarget(col.gameObject,col.bounds.extents.y);
                 lockDot.enabled = true;
                 LockState = true;
                 break;
             }
         }
 
-        //    }
-        //    else
-        //    {
-        //        //to unlock
-        //        lockTarget = null;
-        //    }
+    }
+
+    private class LockTarget
+    {
+        public GameObject obj;
+        public float halfHeight;
+
+        public LockTarget(GameObject _obj,float _halfHeight)
+        {
+            obj = _obj;
+            halfHeight = _halfHeight;
+        }
     }
 
 }

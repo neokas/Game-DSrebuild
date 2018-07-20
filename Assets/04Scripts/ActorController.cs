@@ -28,7 +28,9 @@ public class ActorController : MonoBehaviour {
     private bool isCanJump = true;
     private bool isCanGuard = true;
     private bool isCanRoll = true;
+
     private bool islockPlanar = false;
+    private bool trackDirection = false;
 
     private float lerpTarget;
 
@@ -60,9 +62,9 @@ public class ActorController : MonoBehaviour {
 
     private void FixedUpdate()
     {
-
         float targetRunMulti = (pi.run) ? 2.0f : 1.0f;
         anim.SetFloat("forward", pi.Dmag * Mathf.Lerp(anim.GetFloat("forward"), targetRunMulti, 0.5f));
+
 
         anim.SetBool("defense", pi.defense);
         //anim.SetBool("run", pi.run);
@@ -74,7 +76,7 @@ public class ActorController : MonoBehaviour {
             isCanGuard = false;
         }
 
-        if(pi.attack == true && CheckState("ground") && isCanAttack)
+        if (pi.attack == true && CheckState("ground") && isCanAttack)
         {
             anim.SetTrigger("attack");
 
@@ -82,34 +84,25 @@ public class ActorController : MonoBehaviour {
             isCanRoll = false;
         }
 
-        if (CameraCon.LockState == false)
-        {
-            if (pi.Dmag > 0.1f)
-            {
-                //model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.5f);
-                model.transform.forward = pi.Dvec;
-            }
 
-            if (islockPlanar == false)
-            {
-                planarVec = pi.Dmag * model.transform.forward * walkSpeed * ((pi.run) ? runMultiplier : 1.0f);
-            }
-        }
-        else
+        if (pi.Dmag > 0.1f)
         {
-            model.transform.forward = transform.forward;
-            if (islockPlanar == false)
-            {
-                planarVec = pi.Dvec * ((pi.run) ? runMultiplier : 1.0f);
-            }
+            //model.transform.forward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.5f);
+            model.transform.forward = pi.Dvec;
         }
+
+        if (islockPlanar == false)
+        {
+            planarVec = pi.Dmag * model.transform.forward * walkSpeed * ((pi.run) ? runMultiplier : 1.0f);
+        }
+
 
         rigid.position += deltaPos;
-        rigid.velocity = new Vector3(planarVec.x, rigid.velocity.y, planarVec.z)+thrustVec;
+        rigid.velocity = new Vector3(planarVec.x, rigid.velocity.y, planarVec.z) + thrustVec;
         thrustVec = Vector3.zero;
         deltaPos = Vector3.zero;
 
-        if((pi.roll && isCanRoll) || rigid.velocity.magnitude>7f)
+        if ((pi.roll && isCanRoll) || rigid.velocity.magnitude > 7f)
         {
             anim.SetTrigger("roll");
             isCanAttack = false;
@@ -132,6 +125,7 @@ public class ActorController : MonoBehaviour {
         pi.inputEnable = false;
         islockPlanar = true;
         thrustVec = new Vector3(0, jumpVelocity, 0);
+        trackDirection = true;
     }
 
     public void OnJumpExit()
@@ -158,6 +152,7 @@ public class ActorController : MonoBehaviour {
 
         isCanAttack = true;
         isCanGuard = true;
+        trackDirection = false;
     }
 
     public void OnGroundExit()
@@ -176,6 +171,7 @@ public class ActorController : MonoBehaviour {
         pi.inputEnable = false;
         islockPlanar = true;
         thrustVec = new Vector3(0, rollVelocity, 0);
+        trackDirection = true;
     }
 
     public void OnJabEnter()

@@ -115,8 +115,12 @@ public class JoystickInput : IUserInput
 
         roll = buttonA.onReleased && buttonA.isDelaying; //翻滚
         defense = buttonLB.isPressing;//防御
-        attack = buttonX.onPressed;//攻击
+        //attack = buttonX.onPressed;//攻击
 
+        rb = buttonRB.onPressed;
+        rt = buttonRT.onPressed;
+        lb = buttonLB.onPressed;
+        lt = buttonLT.onPressed;
         lockon = buttonRSC.onPressed; //锁定
     }
 

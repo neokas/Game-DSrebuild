@@ -36,6 +36,9 @@ public class ActorController : MonoBehaviour {
 
     private Vector3 deltaPos;
 
+
+    public bool isLeftHandShield = true;
+
     private void Awake()
     {
         IUserInput[] inputs = GetComponents<IUserInput>();
@@ -65,10 +68,25 @@ public class ActorController : MonoBehaviour {
         float targetRunMulti = (pi.run) ? 2.0f : 1.0f;
         anim.SetFloat("forward", pi.Dmag * Mathf.Lerp(anim.GetFloat("forward"), targetRunMulti, 0.5f));
 
-
+        //举盾
         anim.SetBool("defense", pi.defense);
-        //anim.SetBool("run", pi.run);
+        if (isLeftHandShield)
+        {
+            if(CheckState("ground"))
+            {
+                anim.SetLayerWeight(anim.GetLayerIndex("defense"), 1);
+            }
+            else
+            {
+                anim.SetLayerWeight(anim.GetLayerIndex("defense"), 0);
+            }
+        }
+        else
+        {
+            anim.SetLayerWeight(anim.GetLayerIndex("defense"), 0);
+        }
 
+        //跳跃
         if (pi.jump && isCanJump)
         {
             anim.SetTrigger("jump");
@@ -76,9 +94,21 @@ public class ActorController : MonoBehaviour {
             isCanGuard = false;
         }
 
-        if (pi.attack == true && (CheckState("ground")|| CheckStateTag("attack"))&& isCanAttack)
+        //攻击
+        if ((pi.rb || pi.lb)&& (CheckState("ground")|| CheckStateTag("attack"))&& isCanAttack)
         {
-            anim.SetTrigger("attack");
+            if (pi.rb)
+            {
+                anim.SetBool("leftHandAttack", false);
+                anim.SetTrigger("attack");
+            }
+            else if(pi.lb && !isLeftHandShield)
+            {
+                anim.SetBool("leftHandAttack", true);
+                anim.SetTrigger("attack");
+            }
+
+            
 
             isCanJump = false;
             isCanRoll = false;
@@ -96,7 +126,7 @@ public class ActorController : MonoBehaviour {
             planarVec = pi.Dmag * model.transform.forward * walkSpeed * ((pi.run) ? runMultiplier : 1.0f);
         }
 
-
+        //位移
         rigid.position += deltaPos;
         rigid.velocity = new Vector3(planarVec.x, rigid.velocity.y, planarVec.z) + thrustVec;
         thrustVec = Vector3.zero;
@@ -158,6 +188,8 @@ public class ActorController : MonoBehaviour {
 
         isCanAttack = true;
         isCanGuard = true;
+        isCanJump = true;
+        isCanRoll = true;
         trackDirection = false;
     }
 

@@ -28,6 +28,11 @@ public abstract class IUserInput : MonoBehaviour {
     //锁定
     public bool lockon;
 
+    public bool lb;
+    public bool lt;
+    public bool rb;
+    public bool rt;
+
     [Header("===== Others =====")]
     public bool inputEnable = true;
 

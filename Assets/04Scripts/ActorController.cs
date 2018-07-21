@@ -32,7 +32,7 @@ public class ActorController : MonoBehaviour {
     private bool islockPlanar = false;
     private bool trackDirection = false;
 
-    private float lerpTarget;
+    //private float lerpTarget;
 
     private Vector3 deltaPos;
 
@@ -76,7 +76,7 @@ public class ActorController : MonoBehaviour {
             isCanGuard = false;
         }
 
-        if (pi.attack == true && CheckState("ground") && isCanAttack)
+        if (pi.attack == true && (CheckState("ground")|| CheckStateTag("attack"))&& isCanAttack)
         {
             anim.SetTrigger("attack");
 
@@ -114,6 +114,12 @@ public class ActorController : MonoBehaviour {
     {
         //判断当前的动画机是否属于某状态
         return anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex(layerName)).IsName(stateName);
+    }
+
+    private bool CheckStateTag(string tagName, string layerName = "Base Layer")
+    {
+        //判断当前的动画机是否属于某状态
+        return anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex(layerName)).IsTag(tagName);
     }
 
     /// <summary>
@@ -189,52 +195,17 @@ public class ActorController : MonoBehaviour {
     {
         pi.inputEnable = false;
 
-        lerpTarget = 1.0f;
     }
 
-
-    public void OnAttack1hAUpdate()
-    {//单手攻击A
-        //前移
-        //thrustVec = model.transform.forward * anim.GetFloat("attack1hVelocity");
-
-        //改attack layer的权重 0→1
-        anim.SetLayerWeight(anim.GetLayerIndex("attack"), Mathf.Lerp(anim.GetLayerWeight(anim.GetLayerIndex("attack")), lerpTarget, 0.1f));
-    }
-
-    public void OnAttack1hBUpdate()
-    {//单手攻击B
-        //前移
-        //thrustVec = model.transform.forward * anim.GetFloat("attack1hVelocity");
-    }
-
-    public void OnAttack1hCUpdate()
-    {//单手攻击C
-        //前移
-        //thrustVec = model.transform.forward * anim.GetFloat("attack1hVelocity");
-    }
-
-    public void OnAttackIdleEnter()
-    {
-        pi.inputEnable = true;
-        lerpTarget = 0;
-
-        isCanJump = true;
-        isCanRoll = true;
-    }
-
-    public void OnAttackIdleUpdate()
-    {
-        anim.SetLayerWeight(anim.GetLayerIndex("attack"), Mathf.Lerp(anim.GetLayerWeight(anim.GetLayerIndex("attack")), lerpTarget, 0.1f));
-    }
 
     public void OnUpdateRM(object _deltaPos)
     {//motion 控制动画位移
-        if (CheckState("attack1hA", "attack")|| 
-            CheckState("attack1hB", "attack")||
-            CheckState("attack1hC", "attack"))
+        if (CheckState("attack1hA")|| 
+            CheckState("attack1hB")||
+            CheckState("attack1hC"))
         {
             deltaPos += (0.2f *deltaPos+ 0.8f*(Vector3)_deltaPos)/1.0f;
+
         }
     }
 }

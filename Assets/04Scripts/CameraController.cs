@@ -21,15 +21,17 @@ public class CameraController : MonoBehaviour {
 
     [SerializeField]
     private LockTarget lockTarget;
-    public bool LockState;
+    public bool lockState;
+
+    public bool isAI;
    
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
         cameraHandle = transform.parent.gameObject;
         playerHandle = cameraHandle.transform.parent.gameObject;
         model = playerHandle.GetComponent<ActorController>().model;
-        camera = Camera.main.gameObject;
+        
 
         IUserInput[] inputs = playerHandle.GetComponents<IUserInput>();
         foreach(var input in inputs)
@@ -41,25 +43,16 @@ public class CameraController : MonoBehaviour {
             }
         }
 
-        Cursor.lockState = CursorLockMode.Locked;
-
-        lockDot.enabled = false;
-    }
-
-    private void Update()
-    {
-        if(lockTarget !=null)
+        if(!isAI)
         {
-            lockDot.rectTransform.position = Camera.main.WorldToScreenPoint(lockTarget.obj.transform.position + new Vector3(0, lockTarget.halfHeight, 0));
-
-            if(Vector3.Distance(model.transform.position,lockTarget.obj.transform.position)>10.0f)
-            {
-                lockTarget = null;
-                lockDot.enabled = false;
-                LockState = false;
-            }
+            camera = Camera.main.gameObject;
+            lockDot.enabled = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
+        lockState = false;
     }
+
+
 
     // Update is called once per frame
     void FixedUpdate() {
@@ -86,10 +79,39 @@ public class CameraController : MonoBehaviour {
             cameraHandle.transform.LookAt(lockTarget.obj.transform);
         }
 
-        //相机跟随 抖动太强，将Update方法修改为FixedUpdate
-        camera.transform.position = Vector3.SmoothDamp(camera.transform.position, transform.position, ref cameraDampVelocity, cameraDampValue);
-        camera.transform.LookAt(cameraHandle.transform);
+        if (!isAI)
+        {
+            //相机跟随 抖动太强，将Update方法修改为FixedUpdate
+            camera.transform.position = Vector3.SmoothDamp(camera.transform.position, transform.position, ref cameraDampVelocity, cameraDampValue);
+            camera.transform.LookAt(cameraHandle.transform);
+        }
 
+    }
+
+    private void Update()
+    {
+        if (lockTarget != null)
+        {
+            if (!isAI)
+            {
+                lockDot.rectTransform.position = Camera.main.WorldToScreenPoint(lockTarget.obj.transform.position + new Vector3(0, lockTarget.halfHeight, 0));
+            }
+
+            if (Vector3.Distance(model.transform.position, lockTarget.obj.transform.position) > 10.0f)
+            {
+                LockProcessA(null, false, false, isAI);
+            }
+        }
+    }
+
+    private void LockProcessA(LockTarget _lockTarget,bool _lockDotEnable,bool _lockState,bool _isAI)
+    {
+        if (!_isAI)
+        {
+            lockDot.enabled = _lockDotEnable;
+        }
+        lockTarget = _lockTarget;
+        lockState = _lockState;
     }
 
     public void LockUnLock()
@@ -100,13 +122,11 @@ public class CameraController : MonoBehaviour {
         Vector3 modelOrigin1 = model.transform.position;
         Vector3 modelOrigin2 = modelOrigin1 + new Vector3(0, 1, 0);
         Vector3 boxCenter = modelOrigin1 + model.transform.forward * 5.0f;
-        Collider[] cols = Physics.OverlapBox(boxCenter, new Vector3(0.5f, 0.5f, 5f), model.transform.rotation, LayerMask.GetMask("Enemy"));
+        Collider[] cols = Physics.OverlapBox(boxCenter, new Vector3(0.5f, 0.5f, 5f), model.transform.rotation, LayerMask.GetMask(isAI? "Player" : "Enemy"));
 
         if(cols.Length ==0)
         {
-            lockTarget = null;
-            lockDot.enabled = false;
-            LockState = false;
+            LockProcessA(null, false, false, isAI);
         }
         else
         {
@@ -114,14 +134,11 @@ public class CameraController : MonoBehaviour {
             {
                 if(lockTarget !=null && lockTarget.obj == col.gameObject)
                 {
-                    lockTarget = null;
-                    lockDot.enabled = false;
-                    LockState = false;
+                    LockProcessA(null, false, false, isAI);
                     break;
                 }
-                lockTarget = new LockTarget(col.gameObject,col.bounds.extents.y);
-                lockDot.enabled = true;
-                LockState = true;
+
+                LockProcessA(new LockTarget(col.gameObject, col.bounds.extents.y),true, true, isAI);
                 break;
             }
         }

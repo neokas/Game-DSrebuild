@@ -51,4 +51,10 @@ public abstract class IUserInput : MonoBehaviour {
         return output;
     }
 
+    protected void UpdateDmagDvec(float _Dup2,float _Dright2)
+    {
+        Dmag = Mathf.Sqrt((_Dup2 * _Dup2) + (_Dright2 * _Dright2));
+        Dvec = _Dright2 * transform.right + _Dup2 * transform.forward;
+    }
+
 }

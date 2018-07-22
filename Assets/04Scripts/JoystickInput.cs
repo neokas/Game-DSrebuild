@@ -73,9 +73,10 @@ public class JoystickInput : IUserInput
     void Start () {
         lockon = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         buttonA.Tick(Input.GetButton(btnA));
         buttonB.Tick(Input.GetButton(btnB));
         buttonX.Tick(Input.GetButton(btnX));
@@ -87,19 +88,21 @@ public class JoystickInput : IUserInput
         buttonLSC.Tick(Input.GetButton(btnLSC));
         buttonRSC.Tick(Input.GetButton(btnRSC));
 
+        tragetDup = Input.GetAxis(axisLY);
+        tragetDright = Input.GetAxis(axisLX);
+
+        if (!inputEnable)
+        {
+            tragetDup = 0;
+            tragetDright = 0;
+
+            //buttonA.ResetTimer();
+        }
+
         //摄影机控制
         Camera_up = Input.GetAxis(axisRY);
         Camera_right = Input.GetAxis(axisRX);
 
-        tragetDup = Input.GetAxis(axisLY);
-        tragetDright = Input.GetAxis(axisLX);
-
-        if (inputEnable == false)
-        {
-            tragetDup = 0;
-            tragetDright = 0;
-        }
-        
         Dup = Mathf.SmoothDamp(Dup, tragetDup, ref velocityDup, 0.1f);
         Dright = Mathf.SmoothDamp(Dright, tragetDright, ref velocityDright, 0.1f);
 
@@ -107,21 +110,24 @@ public class JoystickInput : IUserInput
         float Dright2 = tempDAxis.x;
         float Dup2 = tempDAxis.y;
 
-        Dmag = Mathf.Sqrt((Dup2 * Dup2) + (Dright2 * Dright2));
-        Dvec = Dright2 * transform.right + Dup2 * transform.forward;
+        UpdateDmagDvec(Dup2, Dright2);
+        //Dmag = Mathf.Sqrt((Dup2 * Dup2) + (Dright2 * Dright2));
+        //Dvec = Dright2 * transform.right + Dup2 * transform.forward;
 
         run = (buttonA.isPressing && !buttonA.isDelaying) || buttonA.isExtending;   //跑
         jump = buttonA.isExtending && buttonA.onPressed;//跳跃
 
         roll = buttonA.onReleased && buttonA.isDelaying; //翻滚
         defense = buttonLB.isPressing;//防御
-        //attack = buttonX.onPressed;//攻击
+                                      //attack = buttonX.onPressed;//攻击
 
         rb = buttonRB.onPressed;
         rt = buttonRT.onPressed;
         lb = buttonLB.onPressed;
         lt = buttonLT.onPressed;
         lockon = buttonRSC.onPressed; //锁定
+
+        
     }
 
     ////坐标转换 矩形→圆形

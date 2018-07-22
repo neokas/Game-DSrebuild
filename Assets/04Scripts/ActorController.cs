@@ -57,7 +57,11 @@ public class ActorController : MonoBehaviour {
 
     private void Update()
     {
-        if(pi.lockon)
+        anim.SetBool("run", pi.run);
+        float targetRunMulti = (pi.run) ? 2.0f : 1.0f;
+        anim.SetFloat("forward", pi.Dmag * Mathf.Lerp(anim.GetFloat("forward"), targetRunMulti, 0.5f));
+
+        if (pi.lockon)
         {
             CameraCon.LockUnLock();
         }
@@ -65,16 +69,16 @@ public class ActorController : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        float targetRunMulti = (pi.run) ? 2.0f : 1.0f;
-        anim.SetFloat("forward", pi.Dmag * Mathf.Lerp(anim.GetFloat("forward"), targetRunMulti, 0.5f));
+        
 
         //举盾
         anim.SetBool("defense", pi.defense);
-        if (isLeftHandShield)
+        if (isLeftHandShield && CheckStateTag("ground"))
         {
-            if(CheckState("ground"))
+            if(pi.defense)
             {
                 anim.SetLayerWeight(anim.GetLayerIndex("defense"), 1);
+                
             }
             else
             {
@@ -95,7 +99,7 @@ public class ActorController : MonoBehaviour {
         }
 
         //攻击
-        if ((pi.rb || pi.lb)&& (CheckState("ground")|| CheckStateTag("attack"))&& isCanAttack)
+        if ((pi.rb || pi.lb)&& (CheckStateTag("ground")|| CheckStateTag("attack"))&& isCanAttack)
         {
             if (pi.rb)
             {
@@ -107,8 +111,6 @@ public class ActorController : MonoBehaviour {
                 anim.SetBool("leftHandAttack", true);
                 anim.SetTrigger("attack");
             }
-
-            
 
             isCanJump = false;
             isCanRoll = false;
@@ -132,11 +134,18 @@ public class ActorController : MonoBehaviour {
         thrustVec = Vector3.zero;
         deltaPos = Vector3.zero;
 
+        //翻滚
         if ((pi.roll && isCanRoll) || rigid.velocity.magnitude > 7f)
         {
             anim.SetTrigger("roll");
             isCanAttack = false;
             isCanGuard = false;
+        }
+
+        //被击测试
+        if(pi.rt)
+        {
+            anim.SetTrigger("hit");
         }
     }
 
@@ -212,6 +221,11 @@ public class ActorController : MonoBehaviour {
         trackDirection = true;
     }
 
+    public void OnRollExit()
+    {
+        //anim.SetFloat("forward", 1.5f);
+    }
+
     public void OnJabEnter()
     {
         pi.inputEnable = false;
@@ -229,7 +243,6 @@ public class ActorController : MonoBehaviour {
 
     }
 
-
     public void OnUpdateRM(object _deltaPos)
     {//motion 控制动画位移
         if (CheckState("attack1hA")|| 
@@ -240,4 +253,17 @@ public class ActorController : MonoBehaviour {
 
         }
     }
+
+    public void OnHitEnter()
+    {
+        pi.inputEnable = false;
+        islockPlanar = true;
+    }
+
+    public void OnHitExit()
+    {
+        pi.inputEnable = true;
+        islockPlanar = false;
+    }
+
 }

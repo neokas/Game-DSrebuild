@@ -46,4 +46,9 @@ public class MyTimer{
         state = STATE.RUN;
     }
 
+    public void Reset()
+    {
+        elapsedTime = 0;
+    }
+
 }

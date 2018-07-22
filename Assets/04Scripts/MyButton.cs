@@ -71,4 +71,10 @@ public class MyButton{
         timer.Go();
     }
 
+    public void ResetTimer()
+    {
+        extTimer.Reset();
+        delayTimer.Reset();
+    }
+
 }

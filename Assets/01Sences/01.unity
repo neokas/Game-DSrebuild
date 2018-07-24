@@ -827,6 +827,7 @@ GameObject:
   - component: {fileID: 1111308681}
   - component: {fileID: 1111308677}
   - component: {fileID: 1111308682}
+  - component: {fileID: 1111308683}
   m_Layer: 11
   m_Name: PlayerHandle
   m_TagString: Untagged
@@ -972,6 +973,20 @@ MonoBehaviour:
   rb: 0
   rt: 0
   inputEnable: 1
+--- !u!114 &1111308683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1111308676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b324f341120dcd3468fd255cb479dfbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ac: {fileID: 0}
+  bm: {fileID: 0}
+  wm: {fileID: 0}
 --- !u!1 &1274122332
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,7 +1064,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1361106459}
   - component: {fileID: 1361106460}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1099,7 +1114,7 @@ GameObject:
   - component: {fileID: 1447980416}
   m_Layer: 9
   m_Name: Cylinder
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1159,9 +1174,9 @@ CapsuleCollider:
   m_GameObject: {fileID: 1447980414}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Enabled: 0
+  m_Radius: 2
+  m_Height: 2.1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1447980418
@@ -1342,6 +1357,21 @@ MonoBehaviour:
   OnGuard: {x: -32.5, y: 0, z: 15}
   UnGuard: {x: -35, y: -65, z: 10}
   isOnGuard: 0
+--- !u!114 &1564638920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1564638916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56f0c480ff2c7240a4fac64329c692c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  am: {fileID: 0}
+  weaponCol: {fileID: 1736094111}
+  WhL: {fileID: 1520715241}
+  WhR: {fileID: 1562124274}
 --- !u!1 &1582872972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,7 +1479,7 @@ GameObject:
   - component: {fileID: 1736094110}
   m_Layer: 9
   m_Name: Cylinder
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1509,7 +1539,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1736094108}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -1529,6 +1559,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1793116752}
+  - component: {fileID: 1793116753}
   m_Layer: 0
   m_Name: weaponHandle
   m_TagString: Untagged
@@ -1550,6 +1581,17 @@ Transform:
   m_Father: {fileID: 2036655473}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0.112, y: 8.834001, z: -2.798}
+--- !u!114 &1793116753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1793116751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a1e6c71061fe0f49899cdeb73d88462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1813279869
 GameObject:
   m_ObjectHideFlags: 0
@@ -1559,7 +1601,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1813279870}
   - component: {fileID: 1813279871}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: sensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1738,6 +1780,7 @@ GameObject:
   - component: {fileID: 2015921995}
   - component: {fileID: 2015921993}
   - component: {fileID: 2015921992}
+  - component: {fileID: 2015921994}
   m_Layer: 10
   m_Name: EnemyHandle
   m_TagString: Untagged
@@ -1796,6 +1839,20 @@ MonoBehaviour:
   frictionOne: {fileID: 13400000, guid: 951c40b12a2392b4dbb5295c64c84bbe, type: 2}
   frictionZero: {fileID: 13400000, guid: 97af687ba7abe8344aefc8e8517ede51, type: 2}
   isLeftHandShield: 1
+--- !u!114 &2015921994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2015921991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b324f341120dcd3468fd255cb479dfbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ac: {fileID: 0}
+  bm: {fileID: 0}
+  wm: {fileID: 0}
 --- !u!54 &2015921995
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1989,6 +2046,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+--- !u!114 &2036655478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2036655471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56f0c480ff2c7240a4fac64329c692c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  am: {fileID: 0}
+  weaponCol: {fileID: 1447980417}
+  WhL: {fileID: 1948283005}
+  WhR: {fileID: 1793116751}
 --- !u!1 &2064481571
 GameObject:
   m_ObjectHideFlags: 0

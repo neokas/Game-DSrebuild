@@ -161,6 +161,11 @@ public class ActorController : MonoBehaviour {
         return anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex(layerName)).IsTag(tagName);
     }
 
+    public void IssueTrigger(string triggerName)
+    {
+        anim.SetTrigger(triggerName);
+    }
+
     /// <summary>
     /// Message processing block
     /// </summary>
@@ -257,13 +262,13 @@ public class ActorController : MonoBehaviour {
     public void OnHitEnter()
     {
         pi.inputEnable = false;
-        islockPlanar = true;
+        planarVec = new Vector3(0, 0, 0);
     }
 
     public void OnHitExit()
     {
         pi.inputEnable = true;
-        islockPlanar = false;
+
     }
 
 }

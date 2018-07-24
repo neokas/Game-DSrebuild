@@ -99,7 +99,7 @@ public class ActorController : MonoBehaviour {
         }
 
         //攻击
-        if ((pi.rb || pi.lb)&& (CheckStateTag("ground")|| CheckStateTag("attack"))&& isCanAttack)
+        if ((pi.rb || pi.lb)&& (CheckStateTag("ground")||CheckStateTag("attackL") || CheckStateTag("attackR")) && isCanAttack)
         {
             if (pi.rb)
             {
@@ -149,13 +149,13 @@ public class ActorController : MonoBehaviour {
         }
     }
 
-    private bool CheckState(string stateName, string layerName = "Base Layer")
+    public bool CheckState(string stateName, string layerName = "Base Layer")
     {
         //判断当前的动画机是否属于某状态
         return anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex(layerName)).IsName(stateName);
     }
 
-    private bool CheckStateTag(string tagName, string layerName = "Base Layer")
+    public bool CheckStateTag(string tagName, string layerName = "Base Layer")
     {
         //判断当前的动画机是否属于某状态
         return anim.GetCurrentAnimatorStateInfo(anim.GetLayerIndex(layerName)).IsTag(tagName);
@@ -269,6 +269,11 @@ public class ActorController : MonoBehaviour {
     {
         pi.inputEnable = true;
 
+    }
+
+    public void OnAttackExit()
+    {
+        model.SendMessage("WeaponDisable");
     }
 
 }

@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 20864276}
   m_Layer: 9
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -474,7 +474,7 @@ GameObject:
   - component: {fileID: 407462013}
   m_Layer: 9
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1266,7 +1266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1520715242}
   m_Layer: 0
-  m_Name: weaponHandle
+  m_Name: weaponHandleL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1295,7 +1295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1562124275}
   m_Layer: 0
-  m_Name: weaponHandle
+  m_Name: weaponHandleR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1369,7 +1369,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   am: {fileID: 0}
-  weaponCol: {fileID: 1736094111}
   WhL: {fileID: 1520715241}
   WhR: {fileID: 1562124274}
 --- !u!1 &1582872972
@@ -1561,7 +1560,7 @@ GameObject:
   - component: {fileID: 1793116752}
   - component: {fileID: 1793116753}
   m_Layer: 0
-  m_Name: weaponHandle
+  m_Name: weaponHandleR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1643,7 +1642,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1948283006}
   m_Layer: 0
-  m_Name: weaponHandle
+  m_Name: weaponHandleL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2058,7 +2057,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   am: {fileID: 0}
-  weaponCol: {fileID: 1447980417}
   WhL: {fileID: 1948283005}
   WhR: {fileID: 1793116751}
 --- !u!1 &2064481571

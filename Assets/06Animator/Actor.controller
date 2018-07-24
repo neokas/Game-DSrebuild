@@ -293,6 +293,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onEnterMessage:
   - OnGroundEnter
+--- !u!114 &114750024781494794
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ea4cfc27fd59b94d86fd3558010c5bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onExitMessage:
+  - OnAttackExit
 --- !u!114 &114762245192142352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1530,7 +1543,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 7c3ac43c854208542b73444c482c0712, type: 3}
-  m_Tag: attack
+  m_Tag: attackL
   m_SpeedParameter: 
   m_MirrorParameter: leftHandAttack
   m_CycleOffsetParameter: 
@@ -1583,7 +1596,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 7c3ac43c854208542b73444c482c0712, type: 3}
-  m_Tag: attack
+  m_Tag: attackR
   m_SpeedParameter: 
   m_MirrorParameter: leftHandAttack
   m_CycleOffsetParameter: 
@@ -1750,7 +1763,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: e53e4a895653b1546a67ab882bc041ad, type: 3}
-  m_Tag: attack
+  m_Tag: attackR
   m_SpeedParameter: 
   m_MirrorParameter: leftHandAttack
   m_CycleOffsetParameter: 
@@ -1807,7 +1820,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 4831e51d07d01434a9767c5e91b2a464, type: 3}
-  m_Tag: attack
+  m_Tag: attackL
   m_SpeedParameter: 
   m_MirrorParameter: leftHandAttack
   m_CycleOffsetParameter: 
@@ -1977,7 +1990,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 4831e51d07d01434a9767c5e91b2a464, type: 3}
-  m_Tag: attack
+  m_Tag: attackR
   m_SpeedParameter: 
   m_MirrorParameter: leftHandAttack
   m_CycleOffsetParameter: 
@@ -2004,7 +2017,7 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: e53e4a895653b1546a67ab882bc041ad, type: 3}
-  m_Tag: attack
+  m_Tag: attackL
   m_SpeedParameter: 
   m_MirrorParameter: leftHandAttack
   m_CycleOffsetParameter: 
@@ -2095,7 +2108,8 @@ AnimatorStateMachine:
   - {fileID: 1109975895319614088}
   - {fileID: 1109222024804744112}
   m_StateMachineTransitions: {}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114750024781494794}
   m_AnyStatePosition: {x: -180, y: -60, z: 0}
   m_EntryPosition: {x: -192, y: 180, z: 0}
   m_ExitPosition: {x: 228, y: 240, z: 0}

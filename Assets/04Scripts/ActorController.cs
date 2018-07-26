@@ -114,6 +114,24 @@ public class ActorController : MonoBehaviour {
             isCanRoll = false;
         }
 
+        if((pi.rt|| pi.lt)&& (CheckStateTag("ground") || CheckStateTag("attackL") || CheckStateTag("attackR")) && isCanAttack)
+        {
+            if (pi.rt)
+            {
+
+            }
+            else
+            {
+                if(!isLeftHandShield)
+                {
+
+                }
+                else
+                {
+                    anim.SetTrigger("counterBack");
+                }
+            }
+        }
 
         if (pi.Dmag > 0.1f)
         {
@@ -273,6 +291,18 @@ public class ActorController : MonoBehaviour {
     }
 
     public void OnDieEnter()
+    {
+        pi.inputEnable = false;
+        planarVec = Vector3.zero;
+    }
+
+    public void OnStunnedEnter()
+    {
+        pi.inputEnable = false;
+        planarVec = Vector3.zero;
+    }
+
+    public void OnCounterBackEnter()
     {
         pi.inputEnable = false;
         planarVec = Vector3.zero;

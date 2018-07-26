@@ -34,11 +34,23 @@ public class ActorManger : MonoBehaviour {
         
         return tempInstance;
     }
-    
 
-    public void TryDoDamage()
+    public void SetIsCounterBack(bool value)
     {
-        if(sm.isImmortal)
+        sm.isCounterBackEnable = value;
+    }
+
+    public void TryDoDamage(WeaponControllor targetWc)
+    {
+        if(sm.isCounterBackSuccess)
+        {
+            targetWc.wm.am.Stunned();
+        }
+        else if(sm.isCounterBackFailure)
+        {
+            HitOrDie(false);
+        }
+        else if(sm.isImmortal)
         {
             //无敌 do nothing
         }
@@ -49,28 +61,41 @@ public class ActorManger : MonoBehaviour {
         }
         else
         {
-            if(sm.HP<=0)
-            {
-                //already dead.
-            }
-            else
-            {
-                sm.EffectHP(-5);
-                if (sm.HP > 0)
-                {
-                    Hit();
-                }
-                else 
-                {
-                    Die();
-                }
-            }
+            HitOrDie(true);
         }
+    }
+
+    public void Stunned()
+    {
+        ac.IssueTrigger("stunned");
     }
 
     public void Blocked()
     {
         ac.IssueTrigger("blocked");
+    }
+
+    public void HitOrDie(bool doHitAnimation)
+    {
+        if (sm.HP <= 0)
+        {
+            //already dead.
+        }
+        else
+        {
+            //sm.EffectHP(-5);
+            if (sm.HP > 0)
+            {
+                if (doHitAnimation)
+                {
+                    Hit();
+                }
+            }
+            else
+            {
+                Die();
+            }
+        }
     }
 
     public void Hit()

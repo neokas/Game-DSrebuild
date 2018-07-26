@@ -38,10 +38,39 @@ public class ActorManger : MonoBehaviour {
 
     public void TryDoDamage()
     {
-        if (sm.HP > 0)
+        if(sm.isImmortal)
         {
-            sm.EffectHP(-5);
+            //无敌 do nothing
         }
+        else if(sm.isDefense || sm.isBlocked)
+        {
+            //blocked
+            Blocked();
+        }
+        else
+        {
+            if(sm.HP<=0)
+            {
+                //already dead.
+            }
+            else
+            {
+                sm.EffectHP(-5);
+                if (sm.HP > 0)
+                {
+                    Hit();
+                }
+                else 
+                {
+                    Die();
+                }
+            }
+        }
+    }
+
+    public void Blocked()
+    {
+        ac.IssueTrigger("blocked");
     }
 
     public void Hit()

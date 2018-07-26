@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ActorController : MonoBehaviour {
 
+    public ActorManger am;
     public GameObject model;
     public CameraController CameraCon;
     public IUserInput pi;
@@ -26,7 +27,6 @@ public class ActorController : MonoBehaviour {
 
     private bool isCanAttack = true;
     private bool isCanJump = true;
-    private bool isCanGuard = true;
     private bool isCanRoll = true;
 
     private bool islockPlanar = false;
@@ -53,6 +53,7 @@ public class ActorController : MonoBehaviour {
         anim = model.GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
+        am = GetComponent<ActorManger>();
     }
 
     private void Update()
@@ -69,16 +70,14 @@ public class ActorController : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        
-
         //举盾
-        anim.SetBool("defense", pi.defense);
-        if (isLeftHandShield && CheckStateTag("ground"))
+        if (isLeftHandShield && am.sm.isCanDefense)
         {
-            if(pi.defense)
+            anim.SetBool("defense", pi.defense);
+            if (pi.defense)
             {
                 anim.SetLayerWeight(anim.GetLayerIndex("defense"), 1);
-                
+
             }
             else
             {
@@ -95,7 +94,6 @@ public class ActorController : MonoBehaviour {
         {
             anim.SetTrigger("jump");
             isCanAttack = false;
-            isCanGuard = false;
         }
 
         //攻击
@@ -139,7 +137,6 @@ public class ActorController : MonoBehaviour {
         {
             anim.SetTrigger("roll");
             isCanAttack = false;
-            isCanGuard = false;
         }
 
         //被击测试
@@ -201,7 +198,6 @@ public class ActorController : MonoBehaviour {
         col.material = frictionOne;
 
         isCanAttack = true;
-        isCanGuard = true;
         isCanJump = true;
         isCanRoll = true;
         trackDirection = false;
@@ -262,7 +258,7 @@ public class ActorController : MonoBehaviour {
     public void OnHitEnter()
     {
         pi.inputEnable = false;
-        planarVec = new Vector3(0, 0, 0);
+        planarVec = Vector3.zero;
     }
 
     public void OnHitExit()
@@ -276,4 +272,9 @@ public class ActorController : MonoBehaviour {
         model.SendMessage("WeaponDisable");
     }
 
+    public void OnDieEnter()
+    {
+        pi.inputEnable = false;
+        planarVec = Vector3.zero;
+    }
 }
